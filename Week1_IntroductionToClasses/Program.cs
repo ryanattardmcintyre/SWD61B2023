@@ -20,6 +20,7 @@ namespace Week1_IntroductionToClasses
           
             p1.FirstName = "Joe"; // Joe is going to be stored/assigned into a property inside an object called p1
          
+            p1. = "ryan";
 
             Person p2 = new Person();
 

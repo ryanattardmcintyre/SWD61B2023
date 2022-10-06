@@ -34,9 +34,11 @@ namespace Week1_IntroductionToClasses
             get { return firstName; }
             set { firstName = value; }
         }
+         public string FirstName { get; set; }
          public string LastName { get; set; } //shorthand notation
 
         public string Id //longer (original)
+        public string Id
         {
             get { return id; }
             set { id = value; }
