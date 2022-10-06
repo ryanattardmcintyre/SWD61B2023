@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week1_IntroductionToClasses", "Week1_IntroductionToClasses\Week1_IntroductionToClasses.csproj", "{ABB80BA9-5865-4238-800B-326DA21C9072}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABB80BA9-5865-4238-800B-326DA21C9072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB80BA9-5865-4238-800B-326DA21C9072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB80BA9-5865-4238-800B-326DA21C9072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB80BA9-5865-4238-800B-326DA21C9072}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C44D6F0-4189-4253-AF4F-4477A2B63D0C}
+	EndGlobalSection
+EndGlobal
