@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace Week1_IntroductionToClasses
 {
-    enum Reason {NoMatch, WeakPassword, Ok };
+    public enum Reason {NoMatch, WeakPassword, Ok };
 
     class Person //is a definition (template) which defines
                  //an entity by grouping a list members/behaviours which best describe that particular entity
     {
+        //default constructor
+        //1. constructor is used to build an object
+        //2. constructors may also be used to initialize values to a default state
+        public Person()
+        {
+            password = "123";
+        }
+
+
         //fields: characteristics which describe the entity (containers for data)
         //note 1: a data type + an identifier
         //note 2: fields are private
