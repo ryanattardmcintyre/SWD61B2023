@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Week2_Inheritance
 {
+    //base
     class Circle
     {
+        
+        public Circle(double r)
+        { Radius = r; }
+
         public double Radius { get; set; }
         public double Diameter { get { return Radius * 2; }  }
 

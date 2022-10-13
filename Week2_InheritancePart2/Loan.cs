@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Week2_Inheritance
+namespace Week2_InheritancePart2
 {
-    class Program
+    class Loan: Fixed
     {
-        static void Main(string[] args)
-        {
- 
-        }
+        public DateTime RepaymentDate { get; set; }
     }
 }

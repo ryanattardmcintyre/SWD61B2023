@@ -8,6 +8,10 @@ namespace Week2_Inheritance
 {
     class Cylinder: Sphere
     {
+        public Cylinder(double r, double h):base(r)
+        {
+            Height = h;
+        }
         public double Height { get; set; }
 
         public override double FindArea()
