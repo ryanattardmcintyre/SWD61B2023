@@ -12,16 +12,17 @@ namespace Week4_ClassRelationships
     {
         static void Main(string[] args)
         {
-            Engine e = new Engine();
+            Engine e;
+            e = new Engine();
             e.FuelType = FuelType.Hybrid;
             e.Make = "Toyota";
-
 
             Vehicle v = new Vehicle(e);
             v.Make = "Toyota";
             v.Model = "chr";
             v.ManufacturedYear = 2020;
-
+           
+           
             Driver d = new Driver();
             v.AddDriver(d);
 

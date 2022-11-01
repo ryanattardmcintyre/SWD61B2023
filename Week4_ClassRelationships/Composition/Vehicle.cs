@@ -13,11 +13,22 @@ namespace Week4_ClassRelationships.Composition
         public Vehicle(Engine engine)
         { Engine = engine; }
 
-        public Vehicle(Engine engine, string model, string make): this(engine)
-        { Model = model; 
+        public Vehicle(Engine engine, string model,
+            string make): this(engine)
+        {
+            Model = model; 
             Make = make; 
-            //...
+           
         }
+
+        
+        public List<Driver> Drivers { get; set; }
+
+        public void AddDriver(Driver d)
+        { Drivers.Add(d); }
+
+        public void RemoveDriver(Driver d)
+        { Drivers.Remove(d); }
 
         public string Model { get; set; }
         public string Make { get; set; }
@@ -31,17 +42,12 @@ namespace Week4_ClassRelationships.Composition
         public Engine Engine { get; set; }
 
         public string OwnerId { get; set; }
-        public List<Driver> Drivers { get; set; }
-
-        public void AddDriver(Driver d)
-        { Drivers.Add(d); }
-
-        public void RemoveDriver(Driver d)
-        { Drivers.Remove(d); }
 
         public void ChangeOwner(Person p)
         {
             OwnerId = p.IdCardNo;
         }
+
+     
     }
 }
