@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{683883FC-7301-43E1-867C-6A9AD1DCE85E}</ProjectGuid>
+    <ProjectGuid>{661E9AC7-E9AF-4BE7-AEFF-050775AA8B7E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Week5_Interfaces</RootNamespace>
-    <AssemblyName>Week5_Interfaces</AssemblyName>
+    <RootNamespace>Week5_Interfaces_W6Q3</RootNamespace>
+    <AssemblyName>Week5_Interfaces_W6Q3</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IFile.cs" />
-    <Compile Include="ILog.cs" />
-    <Compile Include="SystemLog.cs" />
+    <Compile Include="Character.cs" />
+    <Compile Include="IAttack.cs" />
+    <Compile Include="IHeal.cs" />
+    <Compile Include="Mage.cs" />
+    <Compile Include="Priest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextFileLog.cs" />
+    <Compile Include="Warrior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

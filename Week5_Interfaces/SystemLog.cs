@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Week5_Interfaces
 {
+    //an abstract is like an interface however it allows implementation!
     abstract class SystemLog : ILog
     {
         //access modifiers:
@@ -14,6 +15,9 @@ namespace Week5_Interfaces
         //protected: allows the property to be accessed only from inherited classes
 
         protected List<string> Logs = new List<string>();
+
+    
+
         public void Log(string message)
         {
             Logs.Add($"{DateTime.Now.ToString()}: {LogType.Info}:  {message}");

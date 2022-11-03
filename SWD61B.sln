@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5_AbstractClasses", "We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5_Interfaces", "Week5_Interfaces\Week5_Interfaces.csproj", "{683883FC-7301-43E1-867C-6A9AD1DCE85E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5_Interfaces_W6Q3", "Week5_Interfaces_W6Q3\Week5_Interfaces_W6Q3.csproj", "{661E9AC7-E9AF-4BE7-AEFF-050775AA8B7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{683883FC-7301-43E1-867C-6A9AD1DCE85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{683883FC-7301-43E1-867C-6A9AD1DCE85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{683883FC-7301-43E1-867C-6A9AD1DCE85E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{661E9AC7-E9AF-4BE7-AEFF-050775AA8B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661E9AC7-E9AF-4BE7-AEFF-050775AA8B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661E9AC7-E9AF-4BE7-AEFF-050775AA8B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661E9AC7-E9AF-4BE7-AEFF-050775AA8B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

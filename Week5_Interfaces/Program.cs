@@ -17,7 +17,8 @@ namespace Week5_Interfaces
     {
         static void Main(string[] args)
         {
-
+            TextFileLog myLoggingMethod = new TextFileLog();
+            
         }
     }
 
