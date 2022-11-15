@@ -25,6 +25,8 @@ namespace Week6_BusinessLogic.Models
         public string Author { get; set; }
         public int CategoryFK { get; set; }
         public int PublishedYear { get; set; }
+        public Nullable<int> Volume { get; set; }
+        public Nullable<int> Issue { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

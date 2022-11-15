@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SWD61B_OOPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SWD61B_OOPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Books">
           <Key>
             <PropertyRef Name="Isbn" />
@@ -14,6 +14,8 @@
           <Property Name="Author" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CategoryFK" Type="int" Nullable="false" />
           <Property Name="PublishedYear" Type="int" Nullable="false" />
+          <Property Name="Volume" Type="int" />
+          <Property Name="Issue" Type="int" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -96,8 +98,7 @@
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SWD61B_OOPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -112,6 +113,8 @@
           <Property Name="PublishedYear" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Books_Categories" FromRole="Books" ToRole="Categories" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Books" FromRole="Books" ToRole="Transactions" />
+          <Property Name="Volume" Type="Int32" />
+          <Property Name="Issue" Type="Int32" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -207,6 +210,8 @@
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="SWD61B_OOPModel.Book">
               <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="Issue" ColumnName="Issue" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
                 <ScalarProperty Name="Isbn" ColumnName="Isbn" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
