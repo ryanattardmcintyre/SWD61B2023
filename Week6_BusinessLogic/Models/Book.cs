@@ -28,6 +28,7 @@ namespace Week6_BusinessLogic.Models
         public Nullable<int> Volume { get; set; }
         public Nullable<int> Issue { get; set; }
     
+        
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }

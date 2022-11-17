@@ -38,7 +38,9 @@ namespace Week6_BusinessLogic.Repositories
         public IQueryable<Member> GetMembers()
         {
             //approach 1:
-            return Context.Members;
+           return Context.Members;
+
+         
 
             //LINQ version, approach 2:
             //var list = from m in Context.Members //start with from

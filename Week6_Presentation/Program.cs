@@ -14,12 +14,24 @@ namespace Week6_Presentation
         {
             int choice = -1;
             SWD61B_OOPEntities context = new SWD61B_OOPEntities(); //an object representing an abstraction of the database
+
+            //creating an object of MembersRepository so we could call the methods
+            //inside that class
+            MembersRepository mr = new MembersRepository(context);
+
             do
             {
                 Console.Clear();
                 Console.WriteLine("1. Add Member");
                 Console.WriteLine("2. List Members");
                 Console.WriteLine("3. Search for Member");
+
+                Console.WriteLine("4. Add Book");
+                Console.WriteLine("5. Search for Book");
+                Console.WriteLine("6. Reserve a book");
+
+
+
 
                 Console.WriteLine("999. Quit");
 
@@ -29,8 +41,6 @@ namespace Week6_Presentation
                 switch (choice)
                 {
                     case 1:
-                        MembersRepository mr = new MembersRepository(context);
-
                         Member m = new Member();
                         Console.WriteLine("Input first name");
                         m.FirstName = Console.ReadLine();
@@ -62,8 +72,77 @@ namespace Week6_Presentation
                         break;
 
                     case 2:
+
+                        var list = mr.GetMembers();
+                        string suffix = "th";
+                        foreach(var member in list)
+                        {
+                            Console.WriteLine($"Id card: {member.IdCard}");
+                            Console.WriteLine($"First name: {member.FirstName}");
+                            Console.WriteLine($"Second name: {member.LastName}");
+
+                            if (member.DOB.Day.ToString().EndsWith("1"))
+                            {
+                                suffix = "st";
+                            }
+                            else if (member.DOB.Day.ToString().EndsWith("2"))
+                            {
+                                suffix = "nd";
+                            }
+                            else if (member.DOB.Day.ToString().EndsWith("3"))
+                            {
+                                suffix = "rd";
+                            }
+                            else
+                            {
+                                suffix = "th";
+                            }
+                            Console.WriteLine($"Date of Birth: {member.DOB.Day} {suffix} {member.DOB.ToString("MMMM")} {member.DOB.Year}"); //https://learn.microsoft.com/en-us/dotnet/api/system.datetime.tostring?view=net-7.0
+
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("");
+                        }
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
                         break;
 
+                    case 3:
+                        Console.WriteLine("Write a search keyword (name/ surname)");
+                        string search = Console.ReadLine();
+
+                        var list1 = mr.GetMembers(search);
+                        foreach (var member in list1)
+                        {
+                            Console.WriteLine($"Id card: {member.IdCard}");
+                            Console.WriteLine($"First name: {member.FirstName}");
+                            Console.WriteLine($"Second name: {member.LastName}");
+
+                            if (member.DOB.Day.ToString().EndsWith("1"))
+                            {
+                                suffix = "st";
+                            }
+                            else if (member.DOB.Day.ToString().EndsWith("2"))
+                            {
+                                suffix = "nd";
+                            }
+                            else if (member.DOB.Day.ToString().EndsWith("3"))
+                            {
+                                suffix = "rd";
+                            }
+                            else
+                            {
+                                suffix = "th";
+                            }
+                            Console.WriteLine($"Date of Birth: {member.DOB.Day} {suffix} {member.DOB.ToString("MMMM")} {member.DOB.Year}"); //https://learn.microsoft.com/en-us/dotnet/api/system.datetime.tostring?view=net-7.0
+
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("");
+                        }
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+                        break;
                 }
 
 
