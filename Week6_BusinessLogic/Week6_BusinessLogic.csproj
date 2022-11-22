@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BooksRepository.cs" />
+    <Compile Include="Repositories\CategoriesRepository.cs" />
     <Compile Include="Repositories\MembersRepository.cs" />
   </ItemGroup>
   <ItemGroup />

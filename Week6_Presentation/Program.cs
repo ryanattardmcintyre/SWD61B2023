@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace Week6_Presentation
             //creating an object of MembersRepository so we could call the methods
             //inside that class
             MembersRepository mr = new MembersRepository(context);
+            CategoriesRepository cr = new CategoriesRepository(context);
+            BooksRepository br = new BooksRepository(context);
 
             do
             {
@@ -29,10 +32,11 @@ namespace Week6_Presentation
                 Console.WriteLine("4. Add Book");
                 Console.WriteLine("5. Search for Book");
                 Console.WriteLine("6. Reserve a book");
+                Console.WriteLine("7. Delete a book");
 
-
-
-
+                Console.WriteLine("8. Count the number of times a book was borrowed");
+                Console.WriteLine("9. Average of number of days all books are borrowed");
+               
                 Console.WriteLine("999. Quit");
 
                 choice = Convert.ToInt32(Console.ReadLine());
@@ -143,6 +147,109 @@ namespace Week6_Presentation
                         Console.ReadKey();
 
                         break;
+
+                    case 4:
+                        Book myNewBook = new Book();
+                        try
+                        {
+                            Console.WriteLine("Input isbn:");
+                            myNewBook.Isbn = Console.ReadLine();
+
+                            Console.WriteLine("Input author:");
+                            myNewBook.Author = Console.ReadLine();
+
+                            Console.WriteLine("Input name:");
+                            myNewBook.Name = Console.ReadLine();
+
+                            bool correctInput = false;
+                            int year1;
+                            do
+                            {
+                                Console.WriteLine("Input year:");
+                                correctInput = int.TryParse(Console.ReadLine(), out year1);
+                                if (correctInput)
+                                { myNewBook.PublishedYear = year1; }
+                                else
+                                {
+                                    Console.WriteLine("Wrong input. Input only numbers");
+                                }
+                            } while (correctInput == false);
+
+
+                            Console.WriteLine("Input Volume (if any - leave empty if no volume:");
+                            string volume = Console.ReadLine();
+                            if (string.IsNullOrEmpty(volume))
+                                myNewBook.Volume = 0;
+                            else myNewBook.Volume = Convert.ToInt32(volume);
+
+                            Console.WriteLine("Input Issue no (if any - leave empty if no issue:");
+                            string issue = Console.ReadLine();
+                            if (string.IsNullOrEmpty(issue))
+                                myNewBook.Issue = 0;
+                            else myNewBook.Issue = Convert.ToInt32(issue);
+
+                            Console.WriteLine();
+                            Console.WriteLine("Categories:");
+                            foreach (var c in cr.GetCategories())
+                            {
+                                Console.WriteLine($"{c.Id} - {c.Title}");
+                            }
+                            Console.WriteLine("Type the number next to the category for the book:");
+                            myNewBook.CategoryFK = Convert.ToInt32(Console.ReadLine());
+                            br.AddBook(myNewBook);
+                            Console.WriteLine("Book was added successfully");
+                        }
+                        catch (FormatException ex) //catches only exceptions related when there's a conversion
+                        {
+                            Console.WriteLine("The year, the volume, the issue, and the category - they must all be numbers. Check your inputs");
+                        }
+                        catch (SqlException ex) //catches only exceptions raised by the database
+                        {
+                            Console.WriteLine("There was an error while adding your book. " +
+                                "It might be that you have input an incorrect Category or perhaps you used very long names. Check again");
+                        }
+                        catch (Exception ex) //this catches all exceptions
+                        {
+                            //log the ex.Message
+                            Console.WriteLine("Book wasn't added. Some inputs may be invalid. Check your inputs.");
+                        }
+                        
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+                        break;
+
+                    case 5:
+
+                        Console.WriteLine("Write a search keyword (name)");
+                        string search2 = Console.ReadLine();
+
+                        var list2 = br.GetBooks(search2);
+                        if (list2.Count() == 0)
+                            Console.WriteLine("No books found!!");
+                        else
+                        {
+                                 foreach (var b in list2)
+                                                        {
+                                                            Console.WriteLine($"Isbn: {b.Isbn}");
+                                                            Console.WriteLine($"Author: {b.Author}");
+                                                            Console.WriteLine($"Name: {b.Name}");
+                                                            Console.WriteLine($"Year: {b.PublishedYear}");
+                                                            Console.WriteLine($"Vol {b.Volume} Issue No. {b.Issue}");
+                                                            Console.WriteLine($"Category: {b.Category.Title}");
+                            
+                                                            Console.WriteLine("------------------------------------");
+                                                            Console.WriteLine("");
+                                                        }
+                        }
+
+                       
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+
+                        break;
+
                 }
 
 

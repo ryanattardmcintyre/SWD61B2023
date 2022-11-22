@@ -41,27 +41,46 @@ namespace Week6_BusinessLogic.Repositories
             //1. Get the book
             Book bookThatIsGoingToBeBorrowed = GetBook(t.IsbnFK);
 
-            //2. check whether there are any transactions with DateReturned null
-            int howMany= bookThatIsGoingToBeBorrowed.Transactions.Count(x =>
-             x.DateReturned == null);
+            if(bookThatIsGoingToBeBorrowed != null)
+            {//if book is found
+                    //2. check whether there are any transactions with DateReturned null
+                            int howMany= bookThatIsGoingToBeBorrowed.Transactions.Count(x =>
+                             x.DateReturned == null);
 
-            //3. if there is Transaction with returned date null
-            if (howMany == 1)
-            {
-                //book is borrowed
-                throw new Exception("Book cannot be borrowed");
+                            //3. if there is Transaction with returned date null
+                            //3.i you cannot borrow book
+                            if (howMany == 1)
+                            {
+                                //book is borrowed
+                                 throw new Exception("Book cannot be borrowed");
+                            }
+                            else
+                            {                 //3.ii else you can, add a transaction
+                                //book is available to be borrowed
+                                Context.Transactions.Add(t);
+                                Context.SaveChanges();
+                            }
             }
             else
             {
-                //book is available to be borrowed
-                Context.Transactions.Add(t);
-                Context.SaveChanges();
+                throw new Exception("Book does not exist. Wrong isbn");
             }
-            //3.i you cannot borrow book
-            //3.ii else you can, add a transaction
+        }
 
 
-        
+        public void DeleteBook(string isbn)
+        {
+            Book bookToDelete = GetBook(isbn);
+            if(bookToDelete != null)
+            {
+                Context.Books.Remove(bookToDelete);
+                Context.SaveChanges(); //SaveChanges commits changes in the database permanently
+
+            }
+            else
+            {
+                throw new Exception("Book does not exist. Wrong isbn");
+            }
         }
 
     }
