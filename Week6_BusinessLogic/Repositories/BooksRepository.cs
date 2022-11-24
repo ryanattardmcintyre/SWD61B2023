@@ -27,7 +27,7 @@ namespace Week6_BusinessLogic.Repositories
         public void AddBook(Book b) {
 
             Context.Books.Add(b);
-            Context.SaveChanges(); 
+            Context.SaveChanges();
         }
 
 
@@ -41,25 +41,25 @@ namespace Week6_BusinessLogic.Repositories
             //1. Get the book
             Book bookThatIsGoingToBeBorrowed = GetBook(t.IsbnFK);
 
-            if(bookThatIsGoingToBeBorrowed != null)
+            if (bookThatIsGoingToBeBorrowed != null)
             {//if book is found
-                    //2. check whether there are any transactions with DateReturned null
-                            int howMany= bookThatIsGoingToBeBorrowed.Transactions.Count(x =>
-                             x.DateReturned == null);
+             //2. check whether there are any transactions with DateReturned null
+                int howMany = bookThatIsGoingToBeBorrowed.Transactions.Count(x =>
+                  x.DateReturned == null);
 
-                            //3. if there is Transaction with returned date null
-                            //3.i you cannot borrow book
-                            if (howMany == 1)
-                            {
-                                //book is borrowed
-                                 throw new Exception("Book cannot be borrowed");
-                            }
-                            else
-                            {                 //3.ii else you can, add a transaction
-                                //book is available to be borrowed
-                                Context.Transactions.Add(t);
-                                Context.SaveChanges();
-                            }
+                //3. if there is Transaction with returned date null
+                //3.i you cannot borrow book
+                if (howMany == 1)
+                {
+                    //book is borrowed
+                    throw new Exception("Book cannot be borrowed");
+                }
+                else
+                {                 //3.ii else you can, add a transaction
+                                  //book is available to be borrowed
+                    Context.Transactions.Add(t);
+                    Context.SaveChanges();
+                }
             }
             else
             {
@@ -71,16 +71,73 @@ namespace Week6_BusinessLogic.Repositories
         public void DeleteBook(string isbn)
         {
             Book bookToDelete = GetBook(isbn);
-            if(bookToDelete != null)
+            if (bookToDelete != null)
             {
-                Context.Books.Remove(bookToDelete);
-                Context.SaveChanges(); //SaveChanges commits changes in the database permanently
+                int howMany = bookToDelete.Transactions.Count(x =>
+                         x.DateReturned == null);
 
+                if (howMany == 1)
+                {
+                    throw new Exception("Book cannot be deleted because book is being borrowed");
+                }
+                else
+                {
+                    Context.Books.Remove(bookToDelete);
+                    Context.SaveChanges(); //SaveChanges commits changes in the database permanently
+                }
             }
             else
             {
                 throw new Exception("Book does not exist. Wrong isbn");
             }
+        }
+
+
+        //Book 1, 10
+        //Book 2, 1
+
+        public IQueryable<TransactionsViewModel> ListBookBorrowings()
+            {
+            var list = from b in Context.Books
+                       orderby b.Transactions.Count descending
+                       select new TransactionsViewModel()
+                       {
+                           BookName = b.Name,
+                           Isbn = b.Isbn,
+                           Borrowings = b.Transactions.Count
+                       };
+            return list;
+
+            }
+
+
+        public void ReturnBook(string isbn, DateTime returnedDate)
+        {
+            Book b = GetBook(isbn);
+            Transaction t = b.Transactions.SingleOrDefault(x => x.DateReturned == null);
+            t.DateReturned = returnedDate;
+            Context.SaveChanges();
+        }
+
+        public double GetAvgDaysForBorrowingABook()
+        {
+         /*   var result = (from t in Context.Transactions
+                          where t.DateReturned != null
+                          select new  //creating a new anonymous object on-the-fly
+                          {
+                              Days = t.DateReturned.Value.Subtract(t.DateBorrowed).Days
+                          }).Average(x => x.Days);
+         */
+
+            double sum = 0;
+            foreach (var t in Context.Transactions.Where(x=>x.DateReturned!= null))
+            {
+                sum = t.DateReturned.Value.Subtract(t.DateBorrowed).Days;
+            }
+
+            return sum / (Context.Transactions.Count());
+
+           
         }
 
     }

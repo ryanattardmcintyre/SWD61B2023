@@ -34,9 +34,13 @@ namespace Week6_Presentation
                 Console.WriteLine("6. Reserve a book");
                 Console.WriteLine("7. Delete a book");
 
-                Console.WriteLine("8. Count the number of times a book was borrowed");
-                Console.WriteLine("9. Average of number of days all books are borrowed");
-               
+                Console.WriteLine("8. Count and list book borrowings");
+             
+                Console.WriteLine("10. Average of number of days all books are borrowed");
+
+                Console.WriteLine("11. Check overdue books");
+                Console.WriteLine("12. Return back book");
+
                 Console.WriteLine("999. Quit");
 
                 choice = Convert.ToInt32(Console.ReadLine());
@@ -249,6 +253,105 @@ namespace Week6_Presentation
 
 
                         break;
+
+
+                    case 6:
+                        Console.WriteLine("Which Book? Type in Isbn");
+                        string isbnOfBookToBorrow = Console.ReadLine();
+
+                        Console.WriteLine("Input idcard of the user borrowing the book:");
+                        string idcard = Console.ReadLine();
+
+                        Transaction transaction = new Transaction();
+                        transaction.MemberFK = idcard;
+                        transaction.IsbnFK = isbnOfBookToBorrow;
+
+                        transaction.DateBorrowed = DateTime.Now;
+
+                        try
+                        {
+                            br.BorrowABook(transaction);
+                            Console.WriteLine($"Book with isbn {isbnOfBookToBorrow} has been borrowed successfully");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.Write(ex.Message);
+                            Console.WriteLine(" or isbn is incorrect or idcard incorrect");
+                        }
+
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+                        break;
+
+                    case 7:
+
+                        Console.WriteLine("Which Book to delete? Type in Isbn");
+                        string isbnOfBookToDelete = Console.ReadLine();
+
+                        try
+                        {
+                            br.DeleteBook(isbnOfBookToDelete);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine();
+                        }
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+
+                        break;
+
+                    case 8:
+                        Console.WriteLine("Which Book? Type in Isbn");
+                        string isbnOfBookToCountTransactions = Console.ReadLine();
+
+                        Book b1 = br.GetBook(isbnOfBookToCountTransactions);
+
+                        Console.WriteLine("No of transactions: " + b1.Transactions.Count);
+                        Console.WriteLine();
+                        Console.WriteLine("Transactions:");
+                        foreach(var t in b1.Transactions)
+                        {
+                            Console.WriteLine($"Id: {t.Id}");
+                            Console.WriteLine($"Date Borrowed: {t.DateBorrowed.ToString("dd/MM/yyyy")}");
+                            if(t.DateReturned == null)
+                            {
+                                Console.WriteLine("Book is still out");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Date Returned: {t.DateReturned.Value.ToString("dd/MM/yyyy")}");
+                            }
+                            
+                            Console.WriteLine($"User: {t.MemberFK} | {t.Member.FirstName} | {t.Member.LastName}");
+                        }
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+                        break;
+
+                    case 10:
+                        Console.WriteLine("Avg no of days any book is borrowed is: " +
+                            br.GetAvgDaysForBorrowingABook());
+
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+                        break;
+
+                    case 12:
+                        Console.WriteLine("Which Book? Type in Isbn");
+                        string isbnOfBookReturned = Console.ReadLine();
+
+                        br.ReturnBook(isbnOfBookReturned, DateTime.Now);
+                        
+                        Console.WriteLine("Book was returned succesfully");
+
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+                        break;
+
 
                 }
 
