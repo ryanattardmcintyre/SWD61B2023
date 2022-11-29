@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -121,23 +122,32 @@ namespace Week6_BusinessLogic.Repositories
 
         public double GetAvgDaysForBorrowingABook()
         {
-         /*   var result = (from t in Context.Transactions
-                          where t.DateReturned != null
-                          select new  //creating a new anonymous object on-the-fly
-                          {
-                              Days = t.DateReturned.Value.Subtract(t.DateBorrowed).Days
-                          }).Average(x => x.Days);
-         */
+            //if you're working on an IQueryable, you are not really getting the data
+            //BUT you are instructing the CLR to generate an SQL statement from LINQ statements.
 
-            double sum = 0;
-            foreach (var t in Context.Transactions.Where(x=>x.DateReturned!= null))
+            //Problem was: that LINQ to Entities, the library does not know how to convert DateTime.Subtract into sql-where-clause
+
+               var result = (Context.Transactions.Where(x => x.DateReturned != null).ToList().
+                  Average(x => x.DateReturned.Value.Subtract(x.DateBorrowed).Days));
+               return result; 
+        }
+
+        public IQueryable<Book> GetOverdueBooks(double limit)
+        {
+            var overdueTransactionList = from t in Context.Transactions
+                                  where t.DateReturned == null
+                                  select t;
+
+            List<Book> overdueBookList = new List<Book>();
+            foreach (var t in overdueTransactionList)
             {
-                sum = t.DateReturned.Value.Subtract(t.DateBorrowed).Days;
+                if (DateTime.Now.Subtract(t.DateBorrowed).Days > limit)
+                {
+                    overdueBookList.Add(t.Book);
+                }
             }
 
-            return sum / (Context.Transactions.Count());
-
-           
+            return overdueBookList.AsQueryable();
         }
 
     }

@@ -35,7 +35,10 @@ namespace Week6_Presentation
                 Console.WriteLine("7. Delete a book");
 
                 Console.WriteLine("8. Count and list book borrowings");
-             
+                
+                Console.WriteLine("9. List all books");
+
+
                 Console.WriteLine("10. Average of number of days all books are borrowed");
 
                 Console.WriteLine("11. Check overdue books");
@@ -330,9 +333,73 @@ namespace Week6_Presentation
                         Console.ReadKey();
                         break;
 
+
+                    case 9:
+
+                        var listofallbooks = br.GetBooks().ToList();
+
+                        for (int i = 0; i <= listofallbooks.Count()-1; i+=3)
+                        {
+                            var currentBooksInPage = listofallbooks.Skip(i).Take(3);
+                            foreach (var b in currentBooksInPage)
+                            {
+                                Console.WriteLine($"Isbn: {b.Isbn}");
+                                Console.WriteLine($"Author: {b.Author}");
+                                Console.WriteLine($"Name: {b.Name}");
+                                Console.WriteLine($"Year: {b.PublishedYear}");
+                                Console.WriteLine($"Vol {b.Volume} Issue No. {b.Issue}");
+                                Console.WriteLine($"Category: {b.Category.Title}");
+                                Console.WriteLine("----------------------------------------------------");
+                                Console.WriteLine();
+                            }
+
+                            Console.WriteLine($"Press a key to  go to page {(i / 3)+2}...");
+                            Console.ReadKey();
+                            Console.Clear();
+
+                        }
+
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+                        break;
+                    
                     case 10:
                         Console.WriteLine("Avg no of days any book is borrowed is: " +
                             br.GetAvgDaysForBorrowingABook());
+
+                        Console.WriteLine("Press a key to return to main menu");
+                        Console.ReadKey();
+
+                        break;
+
+                    case 11:
+
+                        var listOfOverdueBooks = br.GetOverdueBooks(7);
+                        if (listOfOverdueBooks.Count() > 0)
+                        {
+                            Console.WriteLine("Here's a list of overdue books:");
+                            foreach (var overdueBook in listOfOverdueBooks)
+                            {
+                                Console.WriteLine($"Isbn: {overdueBook.Isbn}");
+                                Console.WriteLine($"Author: {overdueBook.Author}");
+                                Console.WriteLine($"Name: {overdueBook.Name}");
+                                Console.WriteLine($"Year: {overdueBook.PublishedYear}");
+                                Console.WriteLine($"Vol {overdueBook.Volume} Issue No. {overdueBook.Issue}");
+                                Console.WriteLine($"Category: {overdueBook.Category.Title}");
+
+                                Transaction overDueTransaction = overdueBook.Transactions.SingleOrDefault(x => x.DateReturned == null);
+
+                                Console.WriteLine($"Date Borrowed: {overDueTransaction.DateBorrowed.ToString("dd/MM/yyyy")}");
+                                Console.WriteLine($"Days Overdue: { DateTime.Now.Subtract(overDueTransaction.DateBorrowed).Days - 7}");
+
+                                Console.WriteLine("------------------------------------");
+                                Console.WriteLine("");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("There are no overdue books!");
+                        }
 
                         Console.WriteLine("Press a key to return to main menu");
                         Console.ReadKey();
